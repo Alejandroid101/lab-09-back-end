@@ -53,9 +53,10 @@ Estimate of time needed to complete: 1HR
 
 Start time: 9:40
 
-Finish time: _____
+Finish time: 1;43
 
-Actual time needed to complete: _____
+Actual time needed to complete: all morning
+NOTE: WE DIDN'T FINISH FEATURE 1 MOVIES
 ________________________________________________________________________________
 
 Number and name of feature: YELP
