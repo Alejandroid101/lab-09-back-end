@@ -70,6 +70,7 @@ app.get('/location', (request, response) => {
         superagent.get(url)
           .then(superagentResults => {
             let results = superagentResults.body.results[0];
+            console.log(superagentResults)
             let locations = new Locations(searchQuery, results);
             //send to database
             let sql = 'INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);'
@@ -120,6 +121,22 @@ app.get('/events', (request, response) => {
       errorHandler(err, response);
     })
 })
+
+app.get('/movies', (request, response) => {
+  let searchQuery = request.query.data;
+  console.log(searchQuery);
+  let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&query=${searchQuery.search_query}&page=1&include_adult=false`
+  superagent
+    .get(url)
+    .then(superagentResults => {
+      // const movieResults = superagentResults;
+      console.log('movie data:'+ superagentResults);
+    })
+    .catch(err => {
+      errorHandler(err, response);
+    })
+})
+
 
 app.use('*', (request, response) => response.status(404).send('Location does not exist pal'));
 
