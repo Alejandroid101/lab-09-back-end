@@ -62,7 +62,7 @@ app.get('/location', (request, response) => {
   client.query(sqlQuery)
     .then(queryResult => {
       if (queryResult.rowCount > 0){
-        console.log('In database, sending row 1');
+        // console.log('In database, sending row 1');
         response.send(queryResult.rows[0])
       }
       else {
@@ -70,7 +70,7 @@ app.get('/location', (request, response) => {
         superagent.get(url)
           .then(superagentResults => {
             let results = superagentResults.body.results[0];
-            console.log(superagentResults)
+            // console.log(superagentResults)
             let locations = new Locations(searchQuery, results);
             //send to database
             let sql = 'INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);'
@@ -124,13 +124,15 @@ app.get('/events', (request, response) => {
 
 app.get('/movies', (request, response) => {
   let searchQuery = request.query.data;
-  console.log(searchQuery);
+  // console.log(searchQuery);
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&query=${searchQuery.search_query}&page=1&include_adult=false`
   superagent
     .get(url)
     .then(superagentResults => {
       // const movieResults = superagentResults;
-      console.log('movie data:'+ superagentResults);
+      //This is where you can find the movie information 
+      let movies = superagentResults.body.results;
+      console.log('movie data:'+ movies[0].title);
     })
     .catch(err => {
       errorHandler(err, response);
